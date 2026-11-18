@@ -1,3 +1,8 @@
+server:
+  port: 8081
 spring:
   application:
-    name: microservices
+    name: microservicesg
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

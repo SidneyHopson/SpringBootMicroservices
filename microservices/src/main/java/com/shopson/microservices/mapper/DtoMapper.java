@@ -7,20 +7,20 @@ import java.util.function.BiConsumer;
 import com.shopson.microservices.model.MappableDto;
 
 public class DtoMapper <T extends MappableDto>{
-    private Map<String, BiConsumer<T, Object>> setterMap = new HashMap<>();
+    private Map<String, TypedBiConsumer<T, Object>> setterMap = new HashMap<>();
 
     public DtoMapper() {
-        initialize();
+        initializeMappings();
     }
 
-    public void initialize() {}
+    public void initializeMappings() {}
 
     @SuppressWarnings("unchecked")
     public <U> void registerSetter(String fieldName, BiConsumer<T, U> setter) {
-        setterMap.put(fieldName, (dto, value) -> setter.accept(dto, (U) value));
+        setterMap.put(fieldName, (dto, value) -> setter.accept(dto, (U)value));
     }
 
-    public void setValue(T dto, String fieldName, Object value) {
+    public <U> void setValue(T dto, String fieldName, U value) {
         setterMap.get(fieldName).accept(dto, value);
     }
 

@@ -25,7 +25,34 @@ services:
       - "5432:5432"
     volumes:
       - product_db_data:/var/lib/postgresql/data
+  
+  #LDAP server
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      LDAP_ORGANISATION: "My Company"
+      LDAP_DOMAIN: "mycompany.com"
+      LDAP_ADMIN_PASSWORD: "admin_password"
+    ports:
+      - "389:389"
+    volumes: []
+      # - ./ldap-seed:/container/service/slapd/assets/config/bootstrap/ldif/custom
+
+  #GUI for LDAP
+  phpldapadmin:
+    image: osixia/phpldapadmin:0.9.0
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8080:80"
+    depends_on:
+      - openldap
 
 volumes:
   order_db_data:
   product_db_data:
+  ldap_data:
+  ldap_config:

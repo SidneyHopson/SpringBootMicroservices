@@ -10,7 +10,7 @@ public class PersonMapper extends DtoMapper<PersonDto> {
     }
     
     @Override
-    public void initialize() {
+    public void initializeMappings() {
             registerSetter("firstName", PersonDto::setFirstName);
             registerSetter("lastName", PersonDto::setLastName);
             registerSetter("dateOfBirth", PersonDto::setDateOfBirth);
